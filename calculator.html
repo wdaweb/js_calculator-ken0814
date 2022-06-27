@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <title>Document</title>
+  <style>
+    *,
+    *::after,
+    *::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+    }
+
+    .container {
+      width: 800px;
+      height: 800px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgb(245, 104, 156);
+      border-radius: 50%;
+    }
+
+    .border {
+      width: 395px;
+      height: 595px;
+      border: 1px solid rgb(109, 128, 122);
+      border-radius: 11px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    table {
+      width: 400px;
+      height: 600px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgb(67, 67, 67);
+
+    }
+
+
+
+    td {
+      width: 50px;
+      height: 10px;
+      text-align: center;
+      border-radius: 20px;
+      /* border: 1px solid black; */
+      /* vertical-align: middle; */
+      font-size: 30px;
+    }
+
+
+
+    #input {
+      padding: 0 10px;
+      text-align: right;
+      /* border: 1px solid black; */
+      font-size: 50px;
+      line-height: 50px;
+      background-color: rgb(190, 190, 166);
+      color: black;
+      font-family: 'Orbitron', sans-serif;
+      border-radius: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <table style="padding:60px 19px 25px 19px;border-radius: 15px;">
+
+      <tr>
+        <td colspan="4" id='input'>0</td>
+      </tr>
+      <tr>
+        <td style="border:0;"></td>
+      </tr>
+      <tr>
+        <td style="border:0;"></td>
+      </tr>
+      <tr>
+        <td style="background:rgb(81,81,81)">C</td>
+        <td style="background:rgb(81,81,81)">/</td>
+        <td style="background:rgb(81,81,81);">*</td>
+        <td style="background:rgb(81,81,81)">-</td>
+      </tr>
+
+      <tr>
+        <td style="background:rgb(123,123,123)">7</td>
+        <td style="background:rgb(123,123,123)">8</td>
+        <td style="background:rgb(123,123,123)">9</td>
+        <td rowspan="2" style="background:rgb(81,81,81)">+</td>
+      </tr>
+      <tr>
+        <td style="background:rgb(123,123,123)">4</td>
+        <td style="background:rgb(123,123,123)">5</td>
+        <td style="background:rgb(123,123,123)">6</td>
+      </tr>
+      <tr>
+        <td style="background:rgb(123,123,123)">1</td>
+        <td style="background:rgb(123,123,123)">2</td>
+        <td style="background:rgb(123,123,123)">3</td>
+        <td rowspan="2" style="background:rgb(255,107,1)">=</td>
+      </tr>
+      <tr>
+        <td style="background:rgb(123,123,123)" colspan="2">0</td>
+        <td style="background:rgb(123,123,123)">.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="border"></div>
+
+  <script>
+    const input = document.getElementById('input')
+    const tds = document.querySelectorAll('td:not(#input)')
+
+    for (const td of tds) {
+      td.onclick = () => {
+        const text = td.innerText
+        if (text === '=') {
+          // 執行算式
+          input.innerText = eval(input.innerText)
+        } else if (text === 'C') {
+          // 重設
+          input.innerText = '0'
+        } else {
+          // 一般按鍵
+          if (input.innerText === '0') {
+            input.innerText = text
+          } else {
+            input.innerText += text
+          }
+        }
+      }
+    }
+
+    document.onkeydown = event => {
+      if (event.key === 'Enter') {
+        input.innerText = eval(input.innerText)
+      } else if (
+        !isNaN(parseInt(event.key)) ||
+        event.key === '+' ||
+        event.key === '-' ||
+        event.key === '*' ||
+        event.key === '/' ||
+        event.key === '.'
+      ) {
+        if (input.innerText === '0') {
+          input.innerText = event.key
+        } else {
+          input.innerText += event.key
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
